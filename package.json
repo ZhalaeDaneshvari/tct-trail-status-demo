@@ -1,0 +1,1 @@
+{"name":"tct-trail-status-demo","version":"1.0.0","private":true,"type":"module","description":"Independent TCT reporting and approval workflow demonstration","scripts":{"test":"node --test model.test.js","start":"python3 -m http.server 4173 --bind 127.0.0.1"}}
