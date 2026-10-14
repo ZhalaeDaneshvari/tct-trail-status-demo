@@ -47,9 +47,12 @@ Open `http://127.0.0.1:4173`.
 
 Publish this directory's contents in a repository. In **Settings → Pages**, choose **Deploy from a branch**, branch **main**, folder **/(root)**. Relative asset links work under the repository's Pages path. `.nojekyll` disables unnecessary Jekyll processing.
 
+The site is a progressive web app when served over HTTPS (including GitHub Pages) or localhost. Visitors can install it from their browser's install control. Its app shell and local scripts/styles are cached for offline use; OpenStreetMap tiles and Google Fonts still require a network connection. The service worker is scoped to this directory, so it also works when the Pages site is hosted under a repository path.
+
 ## Project structure
 
 - `index.html`, `styles.css`, `app.js`: browser interface.
+- `manifest.webmanifest`, `sw.js`, `icons/`: install metadata, offline app shell, and install icons.
 - `model.js`: sample data and workflow transitions.
 - `model.test.js`: tests for publication boundaries, duplicate decisions, status precedence, and resolution behavior.
 - `leaflet.js`, `leaflet.css`, `LEAFLET-LICENSE.txt`: pinned map library and its license.
@@ -59,7 +62,7 @@ Private interviews, surveys, research files, and working notes are deliberately 
 
 ## Dependencies and external requests
 
-Leaflet 1.9.4 is vendored under its BSD-2-Clause license; see `LEAFLET-LICENSE.txt`. Basemap requests go to OpenStreetMap with visible attribution and normal browser caching. Fonts load from Google Fonts with local fallbacks. If tiles are unavailable, the section list and workflow remain usable. There is no analytics or tracking code.
+Leaflet 1.9.4 is vendored under its BSD-2-Clause license; see `LEAFLET-LICENSE.txt`. Basemap tiles use the OSM-based `tile.openstreetmap.de` service with visible OpenStreetMap and tile-provider attribution. Fonts load from Google Fonts with local fallbacks. If tiles are unavailable, the section list and workflow remain usable. There is no analytics or tracking code.
 
 ## Before production
 

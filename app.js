@@ -45,7 +45,7 @@ function initMap(){
  if(!window.L){$('#map').innerHTML='<div class="map-fallback">The map could not load. All section information is available in the list.</div>';return;}
  map=L.map('map',{scrollWheelZoom:false,minZoom:5,maxZoom:11}).setView([41.65,43.8],6);
  let tileFailed=false;
- L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).on('tileerror',()=>{if(!tileFailed){tileFailed=true;$('#map-note').textContent='Basemap unavailable. Sample markers and the section list still work. Locations are approximate.';}}).addTo(map);
+ L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors · Tiles <a href="https://openstreetmap.de/">openstreetmap.de</a>'}).on('tileerror',()=>{if(!tileFailed){tileFailed=true;$('#map-note').textContent='Basemap unavailable. Sample markers and the section list still work. Locations are approximate.';}}).addTo(map);
 }
 function refreshMarkers(visible){if(!map)return;mapMarkers.forEach(m=>map.removeLayer(m.marker));mapMarkers=[];
  visible.forEach(s=>{const status=sectionStatus(state,s.id),st=statuses[status];const marker=L.marker(s.coords,{title:`${s.name}: ${st.label}`,alt:`${s.name}: ${st.label}`,icon:L.divIcon({className:'',html:`<span class="map-pin" style="background:${st.color}">${st.symbol}</span>`,iconSize:[32,32],iconAnchor:[16,16]})}).addTo(map);
@@ -102,3 +102,4 @@ $('#reset-button').onclick=()=>$('#reset-dialog').showModal();$('#reset-dialog')
 window.addEventListener('hashchange',()=>{if(location.hash.startsWith('#review/'))queueTab='pending';route();$('#main').focus({preventScroll:true});});
 window.addEventListener('storage',e=>{if(e.key===KEY){try{const next=JSON.parse(e.newValue);if(next?.version===1){state=next;route();toast('Demo updated in another tab.');}}catch{}}});
 route();
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(error=>console.warn('Service worker registration failed:',error)));
